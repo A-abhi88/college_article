@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Submission Status</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .status-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .article-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .status-message {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .status-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .status-pending {
+            color: #ffc107; /* Yellow for pending */
+        }
+
+        .status-approved {
+            color: #28a745; /* Green for approved */
+        }
+
+        .status-rejected {
+            color: #dc3545; /* Red for rejected */
+        }
+
+        .home-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="status-container">
+        <div class="article-title" id="articleTitle"></div>
+        <div class="status-icon" id="statusIcon"></div>
+        <div class="status-message" id="statusMessage"></div>
+        <a href="index.html" class="home-button">Return Home</a>
+    </div>
+
+    <script>
+        // Simulate getting the status and article title from a server or local storage
+        function getArticleData() {
+            // Replace this with actual server-side logic or local storage retrieval
+            // For demonstration, we'll use a random status and a placeholder title
+            const statuses = ['pending', 'approved', 'rejected'];
+            const randomIndex = Math.floor(Math.random() * statuses.length);
+            const status = statuses[randomIndex];
+
+            // In a real application, you would retrieve the actual title
+            const articleTitle = localStorage.getItem('articleTitle') || "Article Title Not Found";
+
+            return { status, articleTitle };
+        }
+
+        function displayStatus() {
+            const { status, articleTitle } = getArticleData();
+            const statusIcon = document.getElementById('statusIcon');
+            const statusMessage = document.getElementById('statusMessage');
+            const articleTitleElement = document.getElementById('articleTitle');
+
+            articleTitleElement.textContent = "Article Title: " + articleTitle;
+
+            switch (status) {
+                case 'pending':
+                    statusIcon.textContent = '⏳'; // Hourglass
+                    statusIcon.classList.add('status-pending');
+                    statusMessage.textContent = 'Your article is pending review.';
+                    break;
+                case 'approved':
+                    statusIcon.textContent = '✅'; // Checkmark
+                    statusIcon.classList.add('status-approved');
+                    statusMessage.textContent = 'Your article has been approved!';
+                    break;
+                case 'rejected':
+                    statusIcon.textContent = '❌'; // Cross mark
+                    statusIcon.classList.add('status-rejected');
+                    statusMessage.textContent = 'Your article was rejected.';
+                    break;
+                default:
+                    statusIcon.textContent = '❓';
+                    statusMessage.textContent = 'Status unknown.';
+                    break;
+            }
+        }
+
+        displayStatus();
+    </script>
+
+</body>
+</html>
